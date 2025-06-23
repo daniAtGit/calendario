@@ -12,6 +12,7 @@
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     themeSystem: 'bootstrap5',
                     height: 'auto',
+                    firstDay: 1,
 
                     titleFormat:{
                         year: 'numeric',
