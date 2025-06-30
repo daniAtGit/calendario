@@ -56,7 +56,11 @@
                         </div>
 
                         <div class="mb-3 text-end">
-                            <input type="button" class="btn btn-sm btn-outline-secondary" value="Indietro" id="indietro">
+                            <a href="{{route('eventi.index')}}">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">
+                                    < Indietro
+                                </button>
+                            </a>
                             <input type="submit" class="btn btn-sm btn-outline-primary" value="Modifica">
                         </div>
                     </form>
