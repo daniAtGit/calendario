@@ -17,6 +17,14 @@
                         <div class="col-1"></div>
 
                         <div class="col-10">
+                            <div class="mb-3 text-end">
+                                <input type="button" class="btn btn-sm btn-outline-secondary" value="< Indietro" id="indietro">
+                                <button class="btn btn-sm btn-outline-danger" x-data="" x-on:click.prevent="$dispatch('open-modal', 'conferma')">
+                                    <i class="fa fa-trash"></i> Elimina
+                                </button>
+                            </div>
+
+
                             <form method="post" action="{{route('evento.update', $evento->id)}}">
                                 @csrf
 
@@ -40,16 +48,7 @@
                                 </div>
 
                                 <div class="mb-3 text-end">
-                                    <input type="button" class="btn btn-sm btn-outline-secondary" value="Indietro" id="indietro">
                                     <input type="submit" class="btn btn-sm btn-outline-primary" value="Modifica">
-                                </div>
-
-                                <hr>
-
-                                <div class="mt-3 text-end">
-                                    <button class="btn btn-sm btn-outline-danger" x-data="" x-on:click.prevent="$dispatch('open-modal', 'conferma')">
-                                        <i class="fa fa-trash"></i> Elimina
-                                    </button>
                                 </div>
                             </form>
                         </div>

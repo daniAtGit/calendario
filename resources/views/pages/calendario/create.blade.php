@@ -40,6 +40,7 @@
                                 </div>
 
                                 <div class="mb-3 text-end">
+                                    <input type="button" class="btn btn-sm btn-outline-secondary" value="< Indietro" id="indietro">
                                     <input type="submit" class="btn btn-sm btn-outline-primary" value="Inserisci">
                                 </div>
                             </form>
@@ -51,4 +52,12 @@
             </div>
         </div>
     </div>
+
+    @section('scripts')
+        <script>
+            $('#indietro').on('click', function() {
+                window.history.back();
+            });
+        </script>
+    @stop
 </x-app-layout>
