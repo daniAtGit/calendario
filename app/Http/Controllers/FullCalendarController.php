@@ -33,10 +33,11 @@ class FullCalendarController extends Controller
         return response()->json($eventi);
     }
 
-    public function create(): View
+    public function create($data = null): View
     {
+        $data = !is_null($data) ? $data : "";
         $persone = Persona::all()->sortBy('nome');
-        return view('pages.calendario.create', compact('persone'));
+        return view('pages.calendario.create', compact('persone','data'));
     }
 
     public function store(Request $request): RedirectResponse

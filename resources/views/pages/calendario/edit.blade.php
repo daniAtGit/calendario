@@ -1,5 +1,6 @@
 <x-app-layout>
-    <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
+{{--<div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">--}}
+    <div>
 
         <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
 
@@ -44,7 +45,7 @@
 
                                 <div class="mb-3">
                                     <label for="start" class="form-label">Giorno/Ora <span class="text-danger">*</span></label>
-                                    <input type="datetime-local" name="start" class="form-control" value="{{$evento->start}}" required>
+                                    <input type="date" name="start" class="form-control" value="{{$evento->start?->format('Y-m-d')}}" required>
                                 </div>
 
                                 <div class="mb-3 text-end">

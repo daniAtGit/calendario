@@ -17,7 +17,7 @@ Route::get('/dashboard', function () {
 
 Route::get('events', [FullCalendarController::class, 'events']);
 
-Route::get('/nuovo-evento', [FullCalendarController::class, 'create'])->name('evento.nuovo');
+Route::get('/nuovo-evento/{data?}', [FullCalendarController::class, 'create'])->name('evento.nuovo');
 Route::post('/nuovo-evento-store', [FullCalendarController::class, 'store'])->name('evento.store');
 Route::get('/modifica-evento/{id}', [FullCalendarController::class, 'edit'])->name('evento.modifica');
 Route::post('/modifica-evento-update/{id}', [FullCalendarController::class, 'update'])->name('evento.update');
