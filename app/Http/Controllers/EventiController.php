@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Evento;
+use App\Models\Icona;
+use App\Http\Requests\EventoRequest;
 use App\Models\Persona;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
@@ -20,13 +22,15 @@ class EventiController extends Controller
     public function create(): View
     {
         $persone = Persona::all()->sortBy('nome');
-        return view('pages.eventi.create', compact('persone'));
+        $icone = Icona::orderBy('nome')->get();
+        return view('pages.eventi.create', compact('persone', 'icone'));
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(EventoRequest $request): RedirectResponse
     {
         $persona = Persona::find($request->persona);
         $evento = $persona->eventi()->create([
+            'icona_id' => $request->icona_id,
             'descrizione' => $request->descrizione,
             'start' => Carbon::parse($request->start)
         ]);
@@ -37,13 +41,15 @@ class EventiController extends Controller
     public function edit(Evento $evento): View
     {
         $persone = Persona::all()->sortBy('nome');
-        return view('pages.eventi.edit', compact('evento','persone'));
+        $icone = Icona::orderBy('nome')->get();
+        return view('pages.eventi.edit', compact('evento', 'persone', 'icone'));
     }
 
-    public function update(Request $request, Evento $evento): RedirectResponse
+    public function update(EventoRequest $request, Evento $evento): RedirectResponse
     {
         $evento->update([
             'persona_id' => $request->persona,
+            'icona_id' => $request->icona_id,
             'descrizione' => $request->descrizione,
             'start' => Carbon::parse($request->start)
         ]);

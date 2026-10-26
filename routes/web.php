@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventiController;
+use App\Http\Controllers\IconeController;
 use App\Http\Controllers\FullCalendarController;
 use App\Http\Controllers\PersoneController;
 use App\Http\Controllers\ProfileController;
@@ -29,6 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('persone', PersoneController::class)->except('show')->parameters(['persone'=>'persona']);
+
+    Route::resource('icone', IconeController::class)->except(['show', 'destroy'])->parameters(['icone' => 'icona']);
 
     Route::resource('eventi', EventiController::class)->except('show')->parameters(['eventi'=>'evento']);
 

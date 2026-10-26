@@ -21,6 +21,10 @@
                         Persone
                     </x-nav-link>
 
+                    <x-nav-link :href="route('icone.index')" :active="request()->routeIs('icone.*')">
+                        Icone
+                    </x-nav-link>
+
                     <x-nav-link :href="route('eventi.index')" :active="request()->routeIs('eventi.*')">
                         Eventi
                     </x-nav-link>
@@ -95,6 +99,10 @@
 
                 <x-responsive-nav-link :href="route('persone.index')">
                     Persone
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('icone.index')" :active="request()->routeIs('icone.*')">
+                    Icone
                 </x-responsive-nav-link>
 
                 <x-responsive-nav-link :href="route('eventi.index')">

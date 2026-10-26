@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Evento;
+use App\Models\Icona;
+use App\Http\Requests\EventoRequest;
 use App\Models\Persona;
 use App\Notifications\EventoInserito;
 use Carbon\Carbon;
@@ -16,7 +18,7 @@ class FullCalendarController extends Controller
     public function events(Request $request): JsonResponse
     {
         $eventi = [];
-        $events = Evento::all();
+        $events = Evento::with(['persona', 'icona'])->get();
 
         foreach ($events as $i => $event) {
             //$startTime = Carbon::parse($event->start)->format('H:i');
@@ -26,7 +28,11 @@ class FullCalendarController extends Controller
                 'title' => $event->descrizione,
                 'start' => $event->start->format('Y-m-d H:i:s'),
                 'url' => route('evento.modifica', ['id' => $event->id]),
-                'backgroundColor' => $event->persona->colore
+                'backgroundColor' => $event->persona->colore,
+                'extendedProps' => [
+                    'icona' => $event->icona?->classe,
+                    'iconaNome' => $event->icona?->nome,
+                ]
             ];
         }
 
@@ -37,13 +43,15 @@ class FullCalendarController extends Controller
     {
         $data = !is_null($data) ? $data : "";
         $persone = Persona::all()->sortBy('nome');
-        return view('pages.calendario.create', compact('persone','data'));
+        $icone = Icona::orderBy('nome')->get();
+        return view('pages.calendario.create', compact('persone', 'data', 'icone'));
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(EventoRequest $request): RedirectResponse
     {
         $persona = Persona::find($request->persona);
         $evento = $persona->eventi()->create([
+            'icona_id' => $request->icona_id,
             'descrizione' => $request->descrizione,
             'start' => Carbon::parse($request->start)
         ]);
@@ -59,15 +67,17 @@ class FullCalendarController extends Controller
     {
         $evento = Evento::find($id);
         $persone = Persona::all()->sortBy('nome');
-        return view('pages.calendario.edit', compact('evento','persone'));
+        $icone = Icona::orderBy('nome')->get();
+        return view('pages.calendario.edit', compact('evento', 'persone', 'icone'));
     }
 
-    public function update(Request $request, $id): RedirectResponse
+    public function update(EventoRequest $request, $id): RedirectResponse
     {
         $evento = Evento::find($id);
 
         $evento->update([
             'persona_id' => $request->persona,
+            'icona_id' => $request->icona_id,
             'descrizione' => $request->descrizione,
             'start' => Carbon::parse($request->start)
         ]);

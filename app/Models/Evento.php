@@ -14,6 +14,7 @@ class Evento extends Model
 
     protected $fillable = [
         'persona_id',
+        'icona_id',
         'descrizione',
         'start'
     ];
@@ -25,5 +26,10 @@ class Evento extends Model
     public function persona(): BelongsTo
     {
         return $this->belongsTo(Persona::class);
+    }
+
+    public function icona(): BelongsTo
+    {
+        return $this->belongsTo(Icona::class);
     }
 }

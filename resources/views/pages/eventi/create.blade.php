@@ -39,19 +39,21 @@
                             <label for="persona" class="form-label">Persona <span class="text-danger">*</span></label>
                             <select name="persona" class="form-control" required>
                                 @foreach($persone as $persona)
-                                    <option value="{{$persona->id}}">{{$persona->nome}}</option>
+                                    <option value="{{$persona->id}}" @selected($persona->id == old('persona'))>{{$persona->nome}}</option>
                                 @endforeach
                             </select>
                         </div>
 
+                        <x-evento-icona :icone="$icone" />
+
                         <div>
                             <label for="descrizione" class="form-label">Descrizione <span class="text-danger">*</span></label>
-                            <textarea name="descrizione" class="form-control mb-3" rows="5" required></textarea>
+                            <textarea name="descrizione" class="form-control mb-3" rows="5" required>{{old('descrizione')}}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label for="start" class="form-label">Giorno/Ora <span class="text-danger">*</span></label>
-                            <input type="datetime-local" name="start" class="form-control" required>
+                            <input type="datetime-local" name="start" class="form-control" value="{{old('start')}}" required>
                         </div>
 
                         <div class="mb-3 text-end">

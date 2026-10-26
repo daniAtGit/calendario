@@ -27,6 +27,7 @@
                     editable: false,
                     events: SITEURL + "/events",
                     displayEventTime: false,
+                    @include('partials.calendar-event-options')
                     selectable: true,
                     selectHelper: true,
                     locale: 'IT',
@@ -65,8 +66,9 @@
         </script>
     @stop
 
-    @section('headScripts')
+    @section('headCss')
         <style>
+            @include('partials.calendar-event-styles')
             /* titolo calendario */
             .fc-toolbar-title{
                 font-size: 1.2em !important;
