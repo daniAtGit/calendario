@@ -76,16 +76,42 @@ class IconeTest extends TestCase
         }
     }
 
-    public function test_invalid_or_missing_event_icons_are_rejected(): void
+    public function test_invalid_event_icons_are_rejected(): void
     {
         $this->actingAs(User::factory()->create());
         $persona = Persona::create(['nome' => 'Mario', 'colore' => '#123456']);
         $data = ['persona' => $persona->id, 'descrizione' => 'Appuntamento', 'start' => '2026-10-23'];
         foreach (['evento', 'eventi'] as $flow) {
-            $this->post(route($flow.'.store'), $data)->assertSessionHasErrors('icona_id');
             $this->post(route($flow.'.store'), $data + ['icona_id' => (string) Str::uuid()])->assertSessionHasErrors('icona_id');
         }
         $this->assertDatabaseCount('eventi', 0);
+    }
+
+    public function test_both_event_flows_allow_no_icon_and_removing_an_existing_icon(): void
+    {
+        $this->actingAs(User::factory()->create());
+        $persona = Persona::create(['nome' => 'Mario', 'colore' => '#123456']);
+        $icona = Icona::create(['nome' => 'Telefono', 'classe' => 'fa-solid fa-phone']);
+        $data = ['persona' => $persona->id, 'descrizione' => 'Appuntamento', 'start' => '2026-10-23'];
+
+        foreach (['evento', 'eventi'] as $flow) {
+            foreach ([[], ['icona_id' => ''], ['icona_id' => null]] as $selection) {
+                $this->post(route($flow.'.store'), $data + $selection)
+                    ->assertSessionHasNoErrors()->assertRedirect();
+            }
+
+            $evento = $persona->eventi()->create([
+                'descrizione' => 'Con icona', 'start' => '2026-10-23', 'icona_id' => $icona->id,
+            ]);
+            $edit = $flow === 'evento' ? 'evento.modifica' : 'eventi.edit';
+            $this->get(route($edit, $evento->id))->assertOk()->assertSee('Nessuna icona');
+            $this->call($flow === 'evento' ? 'POST' : 'PATCH', route($flow.'.update', $evento->id), $data + ['icona_id' => ''])
+                ->assertSessionHasNoErrors()->assertRedirect();
+            $this->assertDatabaseHas('eventi', ['id' => $evento->id, 'icona_id' => null]);
+        }
+
+        $this->assertDatabaseCount('eventi', 8);
+        $this->assertSame(0, Evento::whereNotNull('icona_id')->count());
     }
 
     public function test_feed_supports_legacy_events_and_reflects_icon_changes(): void

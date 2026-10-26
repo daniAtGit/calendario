@@ -15,7 +15,7 @@ class EventoRequest extends FormRequest
     {
         return [
             'persona' => ['required', 'uuid', 'exists:persone,id'],
-            'icona_id' => ['required', 'uuid', 'exists:icone,id'],
+            'icona_id' => ['nullable', 'uuid', 'exists:icone,id'],
             'descrizione' => ['required', 'string'],
             'start' => ['required', 'date'],
         ];
@@ -24,7 +24,6 @@ class EventoRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'icona_id.required' => 'Scegli un’icona per l’evento.',
             'icona_id.exists' => 'L’icona selezionata non è disponibile.',
         ];
     }
