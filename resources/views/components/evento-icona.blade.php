@@ -16,9 +16,10 @@
             @foreach($icone as $icona)
                 <div>
                     <input type="radio" class="btn-check" name="icona_id" id="icona-{{ $icona->id }}"
-                           value="{{ $icona->id }}" @checked(old('icona_id', $selected) == $icona->id) required>
-                    <label class="btn btn-outline-secondary" for="icona-{{ $icona->id }}">
-                        <i class="{{ $icona->classe }} fa-fw me-1" aria-hidden="true"></i> {{ $icona->nome }}
+                           value="{{ $icona->id }}" aria-label="{{ $icona->nome }}" @checked(old('icona_id', $selected) == $icona->id) required>
+                    <label class="btn btn-outline-secondary d-inline-flex align-items-center justify-content-center p-0"
+                           style="width: 2.5rem; height: 2.5rem;" for="icona-{{ $icona->id }}" title="{{ $icona->nome }}">
+                        <i class="{{ $icona->classe }} fa-fw" aria-hidden="true"></i>
                     </label>
                 </div>
             @endforeach
