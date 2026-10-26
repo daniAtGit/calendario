@@ -84,7 +84,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    <div id='calendar' style="padding:10px;background:#fff;"></div>
+                    <div id='calendar' class="calendar-surface" style="padding:10px;"></div>
 
                 </div>
             </div>

@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout theme-toggle-in-header>
 
     @section('headScripts')
         <!-- FullCalendar -->
@@ -95,7 +95,11 @@
 
 
                     @if (Route::has('login'))
-                        <nav class="-mx-3 flex flex-1 justify-end">
+                        <nav class="-mx-3 flex flex-1 items-center justify-end">
+
+                            @guest
+                                <x-theme-toggle />
+                            @endguest
 
 
 
@@ -140,7 +144,7 @@
 {{--                    </div>--}}
 {{--                    <br>--}}
 
-                    <div id='calendar' style="padding:10px;background:#fff;"></div>
+                    <div id='calendar' class="calendar-surface" style="padding:10px;"></div>
                 </main>
 
                 <footer class="py-16 text-center text-sm text-black dark:text-white/70">

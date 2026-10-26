@@ -7,6 +7,10 @@
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @if(auth()->check())
                 @include('layouts.navigation')
+            @elseif (! $attributes->get('theme-toggle-in-header', false))
+                <div class="absolute top-4 right-4 z-50">
+                    <x-theme-toggle />
+                </div>
             @endif
 
             <!-- Page Heading -->
